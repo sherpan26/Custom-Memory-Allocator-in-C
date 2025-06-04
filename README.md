@@ -1,5 +1,5 @@
 # Custom-Memory-Allocator-in-C
-# MyMalloc: Custom Memory Allocator in C
+# MyMalloc: Custom Memory Allocator in C 
 
 This project implements a custom memory allocator in C that mimics the behavior of `malloc()` and `free()` using a fixed-size memory block. It includes robust error handling, alignment guarantees, and support for common allocation patterns. 
 
