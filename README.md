@@ -1,35 +1,31 @@
-# Custom-Memory-Allocator-in-C
-# MyMalloc: Custom Memory Allocator in C 
+# MyMalloc — Custom Memory Allocator in C
 
-This project implements a custom memory allocator in C that mimics the behavior of `malloc()` and `free()` using a fixed-size memory block. It includes robust error handling, alignment guarantees, and support for common allocation patterns. 
+A custom memory allocator that mimics `malloc()` / `free()` on top of a fixed-size heap.
+Implements alignment, block metadata, reuse, and safety checks to catch invalid frees.
 
-## 📁 Project Structure
+## Highlights
+- Fixed-size heap (512 bytes)
+- 8-byte alignment
+- Per-block metadata tracking
+- Block splitting and coalescing (if enabled/implemented)
+- Error detection for invalid pointers / double frees
+- Debug-friendly reporting with file/line macros
 
-- `mymalloc.c` / `mymalloc.h`: Core implementation of the memory allocator.
-- `memgrind.c`: Benchmark driver that runs 5 different test cases and records average execution time.
-- `testA.c` – `testD.c`: Individual test programs for various allocation and deallocation scenarios.
-- `makefile`: Automates compilation of the project and test cases.
+## Project Structure
+- `src/mymalloc.c`, `include/mymalloc.h` — allocator implementation + public API
+- `tests/memgrind.c` — benchmark driver (runs multiple workloads, reports avg runtime)
+- `tests/testA.c` – `tests/testE.c` — targeted tests for allocation/free patterns
+- `makefile` — build + test automation
 
-## 🛠️ Features
+## Test Workloads (Memgrind)
+- **testA:** allocate and immediately free small blocks in a loop
+- **testB:** allocate many small blocks, then free all
+- **testC:** randomized alloc/free pattern to simulate fragmentation
+- **testD:** larger-block stress to exercise splitting/coalescing behavior
+- **testE:** optional custom stress test
 
-- **512-byte fixed memory region**
-- **8-byte memory alignment**
-- **Metadata tracking for each block**
-- **Dynamic block splitting and coalescing (optional)**
-- **Error reporting with source location (via macros)**
-
-## 🧪 Tests
-
-The following tests are implemented:
-
-- `testA`: Allocates and immediately frees 1-byte blocks in a loop.
-- `testB`: Allocates 120 1-byte blocks, then frees them all.
-- `testC`: Random allocation/deallocation until 120 allocations complete.
-- `testD`: Stress test with large blocks and fragmentation.
-- `testE`: Custom stress test slot (optional to implement).
-
-Run all tests and measure average time:
-
+## Build + Run
 ```bash
 make
 ./memgrind
+
